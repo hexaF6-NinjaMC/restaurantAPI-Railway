@@ -37,7 +37,6 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
-  isValidId,
   isAdminOrMangerOrCXIDMatches,
   ordersController.createOrder
 );
