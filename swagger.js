@@ -1,5 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
+const dotenv = require("dotenv");
+
+dotenv.config();
+const serverURL = process.env.HOST_URL;
 
 const doc = {
   info: {
@@ -10,8 +14,8 @@ const doc = {
   },
   servers: [
     {
-      url: "http://localhost:8085",
-      description: "Local server for testing"
+      url: `${serverURL}`,
+      description: "Testing server"
     }
   ],
   components: {

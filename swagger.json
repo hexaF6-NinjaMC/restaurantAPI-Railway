@@ -8,7 +8,7 @@
   "servers": [
     {
       "url": "http://localhost:8085",
-      "description": "Local server for testing"
+      "description": "Testing server"
     }
   ],
   "paths": {
@@ -357,6 +357,9 @@
           },
           "401": {
             "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "Not Found: No record found with ID provided."

@@ -16,7 +16,13 @@ const { isValidId } = require("../middleware/validation");
 router.get("/", isAuthenticated, isAdminOrManager, usersController.getAll);
 
 // Get user by id if authenticated
-router.get("/:id", isAuthenticated, isAdminOrMangerOrCXIDMatches, isValidId, usersController.getCustomerById);
+router.get(
+  "/:id",
+  isAuthenticated,
+  isAdminOrMangerOrCXIDMatches,
+  isValidId,
+  usersController.getCustomerById
+);
 
 // Create a new user if authenticated and not Manager (op_lvl 2)
 router.post("/", isAuthenticated, isNotManager, usersController.createCustomer);
