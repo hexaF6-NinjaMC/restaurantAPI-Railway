@@ -1060,10 +1060,6 @@
       "schemaOrderOptional": {
         "type": "object",
         "properties": {
-          "user": {
-            "type": "string",
-            "example": ""
-          },
           "itemName": {
             "type": "string",
             "example": ""

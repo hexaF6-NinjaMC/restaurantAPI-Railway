@@ -83,7 +83,6 @@ const doc = {
         $amount: ""
       },
       schemaOrderOptional: {
-        user: "",
         itemName: "",
         amount: ""
       },
