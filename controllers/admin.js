@@ -196,7 +196,7 @@ const updateAdmin = async (req, res, next) => {
       .getDb()
       .db()
       .collection("operators")
-      .findOne({ email: operatorData.email.toLowerCase() });
+      .findOne({ email: operatorData.email });
     res.setHeader("Content-Type", "application/json");
     if (!operator) {
       // operator email not found, good to proceed

@@ -31,8 +31,8 @@ router.post("/", isAuthenticated, isNotManager, usersController.createCustomer);
 router.put(
   "/:id",
   isAuthenticated,
-  isValidId,
   isNotManager,
+  isValidId,
   usersController.updateCustomer
 );
 
@@ -40,8 +40,8 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
-  isValidId,
   isNotManager,
+  isValidId,
   usersController.deleteCustomer
 );
 

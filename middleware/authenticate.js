@@ -1,4 +1,6 @@
 const { isObjectIdOrHexString } = require("mongoose");
+const mongodb = require("../data/database");
+const { createObjectId } = require("../helpers/utils");
 
 /**
  * Checks to see if the session user is logged in.
@@ -61,16 +63,40 @@ const isNotManager = (req, res, next) => {
  * If `False`, returns an HTTP 400 (Bad Request) status, else proceeds to use the Express application.
  */
 const isAdminOrMangerOrCXIDMatches = (req, res, next) => {
-  if (!isObjectIdOrHexString(req.query.user_id)) {
-    return res
-      .status(400)
-      .json("ID is not a valid 24-character HexString ObjectID.");
-  }
   if (
     req.session.user.op_lvl !== 1 &&
     req.session.user.op_lvl !== 2 &&
     /* eslint-disable-next-line no-underscore-dangle */
     req.session.user._id !== req.query.user_id.toLowerCase()
+  ) {
+    return res
+      .status(403)
+      .json("You do not have permission to use that resource/method.");
+  }
+  if (!isObjectIdOrHexString(req.query.user_id)) {
+    return res
+      .status(400)
+      .json("ID is not a valid 24-character HexString ObjectID.");
+  }
+  next();
+};
+
+/**
+ * Checks if account has op_lvl of 1 or 2 or if customer account ID matches the order's `user_id`.
+ * If `False`, returns an HTTP 403 (Forbidden) status, else proceeds with the logic check.
+ */
+const isAdminOrMangerOrOrderCX = async (req, res, next) => {
+  const ID = createObjectId(req.params.id);
+  const orderData = await mongodb
+    .getDb()
+    .db()
+    .collection("orders")
+    .findOne({ _id: ID });
+  if (
+    req.session.user.op_lvl !== 1 &&
+    req.session.user.op_lvl !== 2 &&
+    /* eslint-disable-next-line no-underscore-dangle */
+    req.session.user._id !== orderData.user_id.toString()
   ) {
     return res
       .status(403)
@@ -84,5 +110,6 @@ module.exports = {
   isAdminOrManager,
   isFirstLevel,
   isNotManager,
-  isAdminOrMangerOrCXIDMatches
+  isAdminOrMangerOrCXIDMatches,
+  isAdminOrMangerOrOrderCX
 };

@@ -129,7 +129,7 @@ const createCustomer = async (req, res, next) => {
       .getDb()
       .db()
       .collection("customers")
-      .findOne({ email: customerData.email.toLowerCase() });
+      .findOne({ email: customerData.email });
     res.setHeader("Content-Type", "application/json");
     if (!customer) {
       customer = await mongodb
@@ -174,6 +174,10 @@ const updateCustomer = async (req, res, next) => {
   }] */
   // #swagger.summary = "Update Customer record, ref'd by _id, with optional fields."
   // #swagger.description = "Update Customer record, ref'd by _id, with optional fields."
+  /* #swagger.parameters["id"] = {
+    description: "Customer ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Customer record was successfully updated."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
@@ -198,7 +202,7 @@ const updateCustomer = async (req, res, next) => {
       .getDb()
       .db()
       .collection("customers")
-      .findOne({ email: customerData.email.toLowerCase() });
+      .findOne({ email: customerData.email });
     res.setHeader("Content-Type", "application/json");
     if (!customer) {
       // customer email not found, good to proceed

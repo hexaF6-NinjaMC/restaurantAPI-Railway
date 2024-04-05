@@ -8,7 +8,8 @@ const ordersController = require("../controllers/orders");
 const {
   isAuthenticated,
   isAdminOrManager,
-  isAdminOrMangerOrCXIDMatches
+  isAdminOrMangerOrCXIDMatches,
+  isAdminOrMangerOrOrderCX
 } = require("../middleware/authenticate");
 const { isValidId } = require("../middleware/validation");
 
@@ -27,8 +28,8 @@ router.get(
 router.get(
   "/:id",
   isAuthenticated,
-  isAdminOrMangerOrCXIDMatches,
   isValidId,
+  isAdminOrMangerOrOrderCX,
   ordersController.getOrderById
 );
 
@@ -36,8 +37,8 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
-  isAdminOrMangerOrCXIDMatches,
   isValidId,
+  isAdminOrMangerOrCXIDMatches,
   ordersController.createOrder
 );
 
@@ -45,8 +46,8 @@ router.post(
 router.put(
   "/:id",
   isAuthenticated,
-  isAdminOrMangerOrCXIDMatches,
   isValidId,
+  isAdminOrMangerOrOrderCX,
   ordersController.updateOrder
 );
 
@@ -54,8 +55,8 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
-  isAdminOrMangerOrCXIDMatches,
   isValidId,
+  isAdminOrMangerOrOrderCX,
   ordersController.deleteOrder
 );
 

@@ -7,6 +7,11 @@ const { orderPOSTSchema, orderPUTSchema } = require("../helpers/validate");
  */
 const getAll = async (req, res, next) => {
   // #swagger.tags = ["Orders"]
+  /* #swagger.security = [{
+    "Admin": [
+      "read"
+    ]
+  }] */
   // #swagger.summary = "Get All Order records."
   // #swagger.description = "Get All Order records."
   // #swagger.responses[200] = {description: "OK: Order records were successfully pulled."}
@@ -33,21 +38,41 @@ const getAll = async (req, res, next) => {
 /**
  * Retrieves the Order record by ID.
  */
-const getOrderById = async (req, res) => {
+const getOrderById = async (req, res, next) => {
   // #swagger.tags = ["Orders"]
+  /* #swagger.security = [{
+    "Admin": [
+      "read"
+    ],
+    "Customer": [
+      "read"
+    ]
+  }] */
   // #swagger.summary = "Get Order record by ID."
   // #swagger.parameters["id"] = {description: "The Order ID; a hexadecimal string of 24 characters."}
-  /* #swagger.parameters["user_id"] = {
-    description: "The Order User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
-    required: true
-  } */
   // #swagger.responses[200] = {description: "OK: Order record was successfully retrieved."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
   // #swagger.responses[403] = {description: "Forbidden: You must be logged in as an Admin or Manager with the appropriate privileges, or with the appropriate Customer account."}
   // #swagger.responses[404] = {description: "Not Found: No record found with ID provided."}
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while obtaining the Order record."}
-  res.status(200).json({ message: "OrderById GET request" });
+  try {
+    const ID = createObjectId(req.params.id);
+    const result = await mongodb
+      .getDb()
+      .db()
+      .collection("orders")
+      .findOne({ _id: ID });
+    if (!result) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).json({ message: `No order found with ID ${ID}.` }); // Use 404 if nothing found in collection.
+      return;
+    }
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
 };
 
 /**
@@ -55,6 +80,14 @@ const getOrderById = async (req, res) => {
  */
 const getAllOrdersByUserId = async (req, res, next) => {
   // #swagger.tags = ["Orders"]
+  /* #swagger.security = [{
+    "Admin": [
+      "read"
+    ],
+    "Customer": [
+      "read"
+    ]
+  }] */
   // #swagger.summary = "Get Order records by Customer ID."
   /* #swagger.parameters["user_id"] = {
     description: "The Orders\' User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
@@ -90,6 +123,14 @@ const getAllOrdersByUserId = async (req, res, next) => {
 
 const createOrder = async (req, res, next) => {
   // #swagger.tags = ["Orders"]
+  /* #swagger.security = [{
+    "Admin": [
+      "write"
+    ],
+    "Customer": [
+      "write"
+    ]
+  }] */
   /* #swagger.requestBody = {
     content: {
       "application/json": {
@@ -149,6 +190,14 @@ const createOrder = async (req, res, next) => {
  */
 const updateOrder = async (req, res, next) => {
   // #swagger.tags = ["Orders"]
+  /* #swagger.security = [{
+    "Admin": [
+      "write"
+    ],
+    "Customer": [
+      "write"
+    ]
+  }] */
   /* #swagger.requestBody = {
     content: {
       "application/json": {
@@ -161,10 +210,6 @@ const updateOrder = async (req, res, next) => {
   // #swagger.summary = "Update Order record, with optional fields."
   // #swagger.description = "Update Order record, with optional fields."
   // #swagger.parameters["id"] = {description: "The Order ID; a hexadecimal string of 24 characters."}
-  /* #swagger.parameters["user_id"] = {
-    description: "The Order User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
-    required: true
-  } */
   // #swagger.responses[200] = {description: "OK: Order record was successfully updated."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character MongoDB ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
@@ -227,13 +272,17 @@ const updateOrder = async (req, res, next) => {
  */
 const deleteOrder = async (req, res, next) => {
   // #swagger.tags = ["Orders"]
+  /* #swagger.security = [{
+    "Admin": [
+      "delete"
+    ],
+    "Customer": [
+      "delete"
+    ]
+  }] */
   // #swagger.summary = "Delete Order record by ID."
   // #swagger.description = "Delete Order record by ID."
   // #swagger.parameters["id"] = {description: "The Order ID; a hexadecimal string of 24 characters."}
-  /* #swagger.parameters["user_id"] = {
-    description: "The Order User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
-    required: true
-  } */
   // #swagger.responses[200] = {description: "OK: Order record was successfully retrieved."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character MongoDB ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}

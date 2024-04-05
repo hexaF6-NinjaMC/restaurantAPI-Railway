@@ -126,6 +126,7 @@ const customerPUTSchema = Joi.object().keys({
   displayName: Joi.string()
     .empty("")
     .trim()
+    .lowercase()
     .min(2)
     .regex(/^[a-zA-Z.'_-\s]+$/)
     .messages({
@@ -161,15 +162,15 @@ const customerPUTSchema = Joi.object().keys({
 });
 
 const inventoryPOSTSchema = Joi.object().keys({
-  productName: Joi.string().trim().required(),
-  description: Joi.string().trim().required(),
+  productName: Joi.string().trim().lowercase().required(),
+  description: Joi.string().trim().lowercase().required(),
   price: Joi.number().integer().required().min(1),
   stock: Joi.number().integer().required().min(1)
 });
 
 const inventoryPUTSchema = Joi.object().keys({
-  productName: Joi.string().empty("").trim(),
-  description: Joi.string().empty("").trim(),
+  productName: Joi.string().empty("").trim().lowercase(),
+  description: Joi.string().empty("").trim().lowercase(),
   price: Joi.number().integer().empty("").min(1),
   stock: Joi.number().integer().empty("").min(1)
 });

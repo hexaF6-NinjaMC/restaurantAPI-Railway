@@ -63,6 +63,11 @@ const getItemById = async (req, res, next) => {
  */
 const createItem = async (req, res, next) => {
   // #swagger.tags = ["Inventory"]
+  /* #swagger.security = [{
+    "Admin": [
+      "write"
+    ]
+  }] */
   /* #swagger.requestBody = {
     content: {
       "application/json": {
@@ -107,6 +112,11 @@ const createItem = async (req, res, next) => {
  */
 const updateItem = async (req, res, next) => {
   // #swagger.tags = ["Inventory"]
+  /* #swagger.security = [{
+    "Admin": [
+      "write"
+    ]
+  }] */
   /* #swagger.requestBody = {
     content: {
       "application/json": {
@@ -167,6 +177,11 @@ const updateItem = async (req, res, next) => {
  */
 const deleteItem = async (req, res, next) => {
   // #swagger.tags = ["Inventory"]
+  /* #swagger.security = [{
+    "Admin": [
+      "delete"
+    ]
+  }] */
   // #swagger.summary = "Delete an Inventory record."
   // #swagger.description = "Delete an Inventory record."
   // #swagger.responses[200] = {description: "OK: Inventory record was successfully deleted."}

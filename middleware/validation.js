@@ -9,10 +9,7 @@ const { isObjectIdOrHexString } = require("mongoose");
  * If `False`, responds with an HTTP 400 (Bad Request) response and stops, otherwise continues processing.
  */
 const isValidId = (req, res, next) => {
-  if (
-    !isObjectIdOrHexString(req.params.id) &&
-    !isObjectIdOrHexString(req.query.user_id)
-  ) {
+  if (!isObjectIdOrHexString(req.params.id)) {
     return res
       .status(400)
       .json(
