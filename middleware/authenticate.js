@@ -82,6 +82,30 @@ const isAdminOrMangerOrCXIDMatches = (req, res, next) => {
 };
 
 /**
+ * Checks if account has op_lvl of 1 or 2 or if queried customer account ID matches the session `_id`.
+ * If `False`, returns an HTTP 403 (Forbidden) status, else proceeds with the logic check.
+ */
+const isAdminOrMangerOrCXIDMatchesSession = async (req, res, next) => {
+  const ID = createObjectId(req.params.id);
+  const customerData = await mongodb
+    .getDb()
+    .db()
+    .collection("customers")
+    .findOne({ _id: ID });
+  if (
+    req.session.user.op_lvl !== 1 &&
+    req.session.user.op_lvl !== 2 &&
+    /* eslint-disable-next-line no-underscore-dangle */
+    req.session.user._id !== customerData._id.toString()
+  ) {
+    return res
+      .status(403)
+      .json("You do not have permission to use that resource/method.");
+  }
+  next();
+};
+
+/**
  * Checks if account has op_lvl of 1 or 2 or if customer account ID matches the order's `user_id`.
  * If `False`, returns an HTTP 403 (Forbidden) status, else proceeds with the logic check.
  */
@@ -111,5 +135,6 @@ module.exports = {
   isFirstLevel,
   isNotManager,
   isAdminOrMangerOrCXIDMatches,
+  isAdminOrMangerOrCXIDMatchesSession,
   isAdminOrMangerOrOrderCX
 };

@@ -18,7 +18,7 @@ router.use("/", require("./swagger"));
 router.use("/auth", require("./auth"));
 
 router.use("/admin", require("./admin"));
-router.use("/user", require("./users"));
+router.use("/customer", require("./customers"));
 router.use("/order", require("./orders"));
 router.use("/inventory", require("./inv"));
 

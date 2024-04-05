@@ -3,12 +3,12 @@
  */
 
 const router = require("express").Router();
-const usersController = require("../controllers/users");
+const usersController = require("../controllers/customers");
 const {
   isAuthenticated,
   isAdminOrManager,
   isNotManager,
-  isAdminOrMangerOrCXIDMatches
+  isAdminOrMangerOrCXIDMatchesSession
 } = require("../middleware/authenticate");
 const { isValidId } = require("../middleware/validation");
 
@@ -19,7 +19,7 @@ router.get("/", isAuthenticated, isAdminOrManager, usersController.getAll);
 router.get(
   "/:id",
   isAuthenticated,
-  isAdminOrMangerOrCXIDMatches,
+  isAdminOrMangerOrCXIDMatchesSession,
   isValidId,
   usersController.getCustomerById
 );

@@ -230,7 +230,7 @@
         ]
       }
     },
-    "/user/": {
+    "/customer/": {
       "get": {
         "tags": ["Customer"],
         "summary": "Get All Customer records.",
@@ -305,7 +305,7 @@
         }
       }
     },
-    "/user/{id}": {
+    "/customer/{id}": {
       "get": {
         "tags": ["Customer"],
         "summary": "Get Customer record by ID.",
@@ -315,13 +315,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "user_id",
-            "in": "query",
             "schema": {
               "type": "string"
             }
