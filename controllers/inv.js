@@ -44,7 +44,7 @@ const getItemById = async (req, res, next) => {
   try {
     const ID = createObjectId(req.params.id);
     const result = await mongodb
-      .getDatabase()
+      .getDb()
       .db()
       .collection("inventory")
       .findOne({ _id: ID });
