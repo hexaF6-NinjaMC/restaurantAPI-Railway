@@ -256,8 +256,7 @@ const updateOrder = async (req, res, next) => {
           }
         );
       if (order.length > 0) {
-        res.status(200).json(order);
-        return;
+        return res.status(200).json(order);
       }
     }
     res
@@ -303,10 +302,9 @@ const deleteOrder = async (req, res, next) => {
       .deleteOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (result.deletedCount === 0) {
-      res
+      return res
         .status(404)
         .json({ message: `Nothing to delete by ID ${req.params.id}.` }); // Use 404 if nothing found in collection for deleteOrder()
-      return;
     }
     res.status(200).json({ message: "Successfully deleted order record." });
   } catch (err) {
