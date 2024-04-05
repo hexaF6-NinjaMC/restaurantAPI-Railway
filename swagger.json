@@ -14,7 +14,9 @@
   "paths": {
     "/admin/": {
       "get": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Get All Admin (lvl 1) or Manager (lvl 2) records.",
         "description": "Get All Admin (lvl 1) or Manager (lvl 2) records.",
         "parameters": [
@@ -49,12 +51,16 @@
         },
         "security": [
           {
-            "Admin": ["read"]
+            "Admin": [
+              "read"
+            ]
           }
         ]
       },
       "post": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Create a new Admin (lvl 1) or Manager (lvl 2) record.",
         "description": "Create a new Admin (lvl 1) or Manager (lvl 2) record.",
         "responses": {
@@ -79,7 +85,9 @@
         },
         "security": [
           {
-            "Admin": ["write"]
+            "Admin": [
+              "write"
+            ]
           }
         ],
         "requestBody": {
@@ -95,7 +103,9 @@
     },
     "/admin/{id}": {
       "get": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Get Admin (lvl 1) or Manager (lvl 2) record by ID.",
         "description": "Get Admin (lvl 1) or Manager (lvl 2) record by ID.",
         "parameters": [
@@ -137,12 +147,16 @@
         },
         "security": [
           {
-            "Admin": ["read"]
+            "Admin": [
+              "read"
+            ]
           }
         ]
       },
       "put": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Update Admin/Manager record, ref'd by _id, with optional fields.",
         "description": "Update Admin/Manager record, ref'd by _id, with optional fields.",
         "parameters": [
@@ -190,7 +204,9 @@
         },
         "security": [
           {
-            "Admin": ["write"]
+            "Admin": [
+              "write"
+            ]
           }
         ],
         "requestBody": {
@@ -204,7 +220,9 @@
         }
       },
       "delete": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Delete Admin/Manager record, ref'd by _id.",
         "description": "Delete Admin/Manager record, ref'd by _id.",
         "parameters": [
@@ -246,14 +264,18 @@
         },
         "security": [
           {
-            "Admin": ["delete"]
+            "Admin": [
+              "delete"
+            ]
           }
         ]
       }
     },
     "/user/": {
       "get": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "summary": "Get All Customer records.",
         "description": "Get All Customer records.",
         "responses": {
@@ -275,12 +297,16 @@
         },
         "security": [
           {
-            "Admin": ["read"]
+            "Admin": [
+              "read"
+            ]
           }
         ]
       },
       "post": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "summary": "Create a new Customer record.",
         "description": "Create a new Customer record.",
         "responses": {
@@ -311,8 +337,12 @@
         },
         "security": [
           {
-            "Admin": ["write"],
-            "Customer": ["write"]
+            "Admin": [
+              "write"
+            ],
+            "Customer": [
+              "write"
+            ]
           }
         ],
         "requestBody": {
@@ -328,7 +358,9 @@
     },
     "/user/{id}": {
       "get": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "summary": "Get Customer record by ID.",
         "description": "Get Customer record by ID.",
         "parameters": [
@@ -370,13 +402,19 @@
         },
         "security": [
           {
-            "Admin": ["read"],
-            "Customer": ["read"]
+            "Admin": [
+              "read"
+            ],
+            "Customer": [
+              "read"
+            ]
           }
         ]
       },
       "put": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "summary": "Update Customer record, ref'd by _id, with optional fields.",
         "description": "Update Customer record, ref'd by _id, with optional fields.",
         "parameters": [
@@ -424,8 +462,12 @@
         },
         "security": [
           {
-            "Admin": ["write"],
-            "Customer": ["write"]
+            "Admin": [
+              "write"
+            ],
+            "Customer": [
+              "write"
+            ]
           }
         ],
         "requestBody": {
@@ -439,7 +481,9 @@
         }
       },
       "delete": {
-        "tags": ["Customer"],
+        "tags": [
+          "Customer"
+        ],
         "summary": "Delete Customer record, ref'd by _id.",
         "description": "Delete Customer record, ref'd by _id.",
         "parameters": [
@@ -481,15 +525,21 @@
         },
         "security": [
           {
-            "Admin": ["delete"],
-            "Customer": ["delete"]
+            "Admin": [
+              "delete"
+            ],
+            "Customer": [
+              "delete"
+            ]
           }
         ]
       }
     },
     "/order/": {
       "get": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Get All Order records.",
         "description": "Get All Order records.",
         "responses": {
@@ -511,7 +561,9 @@
         }
       },
       "post": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Create Order record.",
         "description": "Create Order record.",
         "parameters": [
@@ -558,7 +610,9 @@
     },
     "/order/customer": {
       "get": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Get Order records by Customer ID.",
         "description": "",
         "parameters": [
@@ -599,7 +653,9 @@
     },
     "/order/{id}": {
       "get": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Get Order record by ID.",
         "description": "",
         "parameters": [
@@ -644,7 +700,9 @@
         }
       },
       "put": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Update Order record, with optional fields.",
         "description": "Update Order record, with optional fields.",
         "parameters": [
@@ -701,7 +759,9 @@
         }
       },
       "delete": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Delete Order record by ID.",
         "description": "Delete Order record by ID.",
         "parameters": [
@@ -748,7 +808,9 @@
     },
     "/inventory/": {
       "get": {
-        "tags": ["Inventory"],
+        "tags": [
+          "Inventory"
+        ],
         "summary": "Get All Inventory records.",
         "description": "Get All Inventory records.",
         "responses": {
@@ -764,7 +826,9 @@
         }
       },
       "post": {
-        "tags": ["Inventory"],
+        "tags": [
+          "Inventory"
+        ],
         "summary": "Create a new Inventory record.",
         "description": "Create a new Inventory record.",
         "responses": {
@@ -797,7 +861,9 @@
     },
     "/inventory/{id}": {
       "get": {
-        "tags": ["Inventory"],
+        "tags": [
+          "Inventory"
+        ],
         "summary": "Get inventory items by Object ID.",
         "description": "Get inventory items by Object ID.",
         "parameters": [
@@ -836,7 +902,9 @@
         }
       },
       "put": {
-        "tags": ["Inventory"],
+        "tags": [
+          "Inventory"
+        ],
         "summary": "Update an Inventory item record.",
         "description": "Update an Inventory item record.",
         "parameters": [
@@ -890,7 +958,9 @@
         }
       },
       "delete": {
-        "tags": ["Inventory"],
+        "tags": [
+          "Inventory"
+        ],
         "summary": "Delete an Inventory record.",
         "description": "Delete an Inventory record.",
         "parameters": [
@@ -991,7 +1061,12 @@
             "example": ""
           }
         },
-        "required": ["displayName", "fname", "email", "op_lvl"]
+        "required": [
+          "displayName",
+          "fname",
+          "email",
+          "op_lvl"
+        ]
       },
       "schemaAdminOptional": {
         "type": "object",
@@ -1046,7 +1121,11 @@
             "example": ""
           }
         },
-        "required": ["displayName", "fname", "email"]
+        "required": [
+          "displayName",
+          "fname",
+          "email"
+        ]
       },
       "schemaCustomerOptional": {
         "type": "object",
@@ -1085,7 +1164,10 @@
             "example": ""
           }
         },
-        "required": ["itemName", "amount"]
+        "required": [
+          "itemName",
+          "amount"
+        ]
       },
       "schemaOrderOptional": {
         "type": "object",
@@ -1124,7 +1206,12 @@
             "example": ""
           }
         },
-        "required": ["productName", "price", "stock", "description"]
+        "required": [
+          "productName",
+          "price",
+          "stock",
+          "description"
+        ]
       },
       "schemaInventoryOptional": {
         "type": "object",

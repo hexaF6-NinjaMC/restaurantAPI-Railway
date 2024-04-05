@@ -7,7 +7,7 @@
     "test": "jest",
     "swagger": "node ./swagger.js",
     "dev": "npm run swagger && npm run lint && nodemon server.js",
-    "start": "node server.js",
+    "start": "npm run swagger && node server.js",
     "lint": "npm run lint:prettier && npm run lint:eslint",
     "lint:eslint": "eslint --fix .",
     "lint:prettier": "prettier --write ."
