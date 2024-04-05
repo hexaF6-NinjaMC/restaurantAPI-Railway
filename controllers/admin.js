@@ -36,8 +36,7 @@ const getAll = async (req, res, next) => {
     result.toArray().then((resArr) => {
       res.setHeader("Content-Type", "application/json");
       if (resArr.length === 0) {
-        res.status(204).send(); // Nothing to send back, as nothing exists.
-        return;
+        return res.status(204).send(); // Nothing to send back, as nothing exists.
       }
       res.status(200).json(resArr);
     });
@@ -77,10 +76,9 @@ const getAdminById = async (req, res, next) => {
       .findOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (!result) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Nothing could be found with ID ${ID}.`
       }); // Nothing was found.
-      return;
     }
     res.status(200).json(result);
   } catch (err) {
@@ -134,7 +132,7 @@ const createAdmin = async (req, res, next) => {
       .getDb()
       .db()
       .collection("operators")
-      .findOne({ email: operatorData.email.toLowerCase() });
+      .findOne({ email: operatorData.email });
     res.setHeader("Content-Type", "application/json");
     if (!operator) {
       operator = await mongodb

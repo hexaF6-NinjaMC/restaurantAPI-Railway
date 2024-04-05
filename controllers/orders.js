@@ -21,13 +21,11 @@ const getAll = async (req, res, next) => {
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while pulling the Order record."}
   try {
     const result = await mongodb.getDb().db().collection("orders").find();
+    res.setHeader("Content-Type", "application/json");
     result.toArray().then((resArr) => {
       if (resArr.length === 0) {
-        res.setHeader("Content-Type", "application/json");
-        res.status(204).json({ message: "No orders to display." }); // Use 204 if nothing found in collection for getAll().
-        return;
+        return res.status(204).send(); // Use 204 if nothing found in collection for getAll().
       }
-      res.setHeader("Content-Type", "application/json");
       res.status(200).json(resArr);
     });
   } catch (err) {
@@ -66,12 +64,10 @@ const getOrderById = async (req, res, next) => {
       .db()
       .collection("orders")
       .findOne({ _id: ID });
-    if (!result) {
-      res.setHeader("Content-Type", "application/json");
-      res.status(404).json({ message: `No order found with ID ${ID}.` }); // Use 404 if nothing found in collection.
-      return;
-    }
     res.setHeader("Content-Type", "application/json");
+    if (!result) {
+      return res.status(404).json({ message: `No order found with ID ${ID}.` }); // Use 404 if nothing found in collection.
+    }
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -110,13 +106,11 @@ const getAllOrdersByUserId = async (req, res, next) => {
       .db()
       .collection("orders")
       .find({ user_id: ID });
+    res.setHeader("Content-Type", "application/json");
     result.toArray().then((resArr) => {
       if (resArr.length === 0) {
-        res.setHeader("Content-Type", "application/json");
-        res.status(204).json({ message: "No orders to display." }); // Use 204 if nothing found in collection for getAll().
-        return;
+        return res.status(204).send(); // Use 204 if nothing found in collection for getAll().
       }
-      res.setHeader("Content-Type", "application/json");
       res.status(200).json(resArr);
     });
   } catch (err) {
@@ -165,20 +159,15 @@ const createOrder = async (req, res, next) => {
       allowUnknown: true
     });
     // Create a new order with CX ID
-    const order = await mongodb
-      .getDb()
-      .db()
-      .collection("orders")
-      .insertOne(
-        // Now for the hard stuff
-        {
-          user_id: orderData.user_id,
-          requests: {
-            itemName: orderData.itemName,
-            amount: orderData.amount
-          }
-        }
-      );
+    const order = await mongodb.getDb().db().collection("orders").insertOne(
+      // Now for the hard stuff
+      {
+        user_id: orderData.user_id,
+        itemName: orderData.itemName,
+        amount: orderData.amount
+      }
+    );
+    res.setHeader("Content-Type", "application/json");
     res.status(201).json(order);
   } catch (err) {
     if (err.isJoi === true) err.status = 422;
@@ -238,15 +227,13 @@ const updateOrder = async (req, res, next) => {
         // Now for the hard stuff
         { _id: ID },
         {
-          $set: {
-            "requests.itemName": orderData.itemName,
-            "requests.amount": orderData.amount
-          }
+          $set: orderData
         },
         {
           returnDocument: "after"
         }
       );
+    res.setHeader("Content-Type", "application/json");
     if (!result) {
       return res
         .status(404)

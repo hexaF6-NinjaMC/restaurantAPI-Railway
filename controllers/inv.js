@@ -17,11 +17,10 @@ const getAll = async (req, res, next) => {
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while pulling the Inventory record."}
   try {
     const result = await mongodb.getDb().db().collection("inventory").find();
+    res.setHeader("Content-Type", "application/json");
     result.toArray().then((resArr) => {
-      res.setHeader("Content-Type", "application/json");
       if (resArr.length === 0) {
-        res.status(204).json({ message: "No inventory to display." }); // Use 204 if nothing found in collection for getAll().
-        return;
+        return res.status(204).json({ message: "No inventory to display." }); // Use 204 if nothing found in collection for getAll().
       }
       res.status(200).json(resArr);
     });
@@ -52,9 +51,9 @@ const getItemById = async (req, res, next) => {
       .db()
       .collection("inventory")
       .findOne({ _id: ID });
-    result.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Type", "application/json");
     if (!result) {
-      res.status(404).json(`No inventory item found with id ${ID}`);
+      return res.status(404).json(`No inventory item found with id ${ID}`);
     }
     res.status(200).json(result);
   } catch (err) {
@@ -209,14 +208,13 @@ const deleteItem = async (req, res, next) => {
       .db()
       .collection("inventory")
       .deleteOne({ _id: ID });
-    result.toArray().then((resArr) => {
-      res.setHeader("Content-Type", "application/json");
-      if (resArr.length === 0) {
-        res.status(404).json({ message: `Nothing to delete by ID ${ID}.` }); // Falsy (default) // Use 404 if nothing found in collection for deleteItem()
-        return;
-      }
-      res.status(200).json({ message: "Deleted record successfully." });
-    });
+    res.setHeader("Content-Type", "application/json");
+    if (!result) {
+      return res
+        .status(404)
+        .json({ message: `Nothing to delete by ID ${ID}.` }); // Use 404 if nothing found in collection for deleteItem()
+    }
+    res.status(200).json({ message: "Deleted record successfully." });
   } catch (err) {
     next(err);
   }

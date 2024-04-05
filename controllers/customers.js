@@ -29,11 +29,10 @@ const getAll = async (req, res, next) => {
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while creating the Customer profile."}
   try {
     const result = await mongodb.getDb().db().collection("customers").find();
+    res.setHeader("Content-Type", "application/json");
     result.toArray().then((resArr) => {
-      res.setHeader("Content-Type", "application/json");
       if (resArr.length === 0) {
-        res.status(204).send(); // Nothing to send back, as nothing exists.
-        return;
+        return res.status(204).send(); // Nothing to send back, as nothing exists.
       }
       res.status(200).json(resArr);
     });
@@ -75,8 +74,9 @@ const getCustomerById = async (req, res, next) => {
       .findOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (!result) {
-      res.status(404).json({ message: `Customer not found by ID ${ID}.` });
-      return;
+      return res
+        .status(404)
+        .json({ message: `Customer not found by ID ${ID}.` });
     }
     res.status(200).json(result);
   } catch (err) {
@@ -268,8 +268,9 @@ const deleteCustomer = async (req, res, next) => {
       .deleteOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (result.deletedCount === 0) {
-      res.status(404).json({ message: `Nothing to delete by ID ${ID}.` }); // Use 404 if nothing found in collection for deleteCustomer()
-      return;
+      return res
+        .status(404)
+        .json({ message: `Nothing to delete by ID ${ID}.` }); // Use 404 if nothing found in collection for deleteCustomer()
     }
     res.status(200).json({ message: "Successfully deleted customer record." });
   } catch (err) {
