@@ -159,8 +159,7 @@ const createOrder = async (req, res, next) => {
     const orderBody = {
       user_id: USER_ID,
       itemName: req.body.itemName,
-      amount: req.body.amount,
-      sold: false
+      amount: req.body.amount
     };
     const orderData = await orderPOSTSchema.validateAsync(orderBody, {
       allowUnknown: true
@@ -176,8 +175,7 @@ const createOrder = async (req, res, next) => {
           user_id: orderData.user_id,
           requests: {
             itemName: orderData.itemName,
-            amount: orderData.amount,
-            sold: orderData.sold
+            amount: orderData.amount
           }
         }
       );
@@ -227,8 +225,7 @@ const updateOrder = async (req, res, next) => {
     const ID = createObjectId(req.params.id);
     const orderBody = {
       itemName: req.body.itemName,
-      amount: req.body.amount,
-      sold: req.body.sold.toLowerCase() in ["yes", "true"]
+      amount: req.body.amount
     };
     const orderData = await orderPUTSchema.validateAsync(orderBody, {
       allowUnknown: true
@@ -251,8 +248,7 @@ const updateOrder = async (req, res, next) => {
           {
             $set: {
               "requests.itemName": orderData.itemName.toLowerCase(),
-              "requests.amount": orderData.amount,
-              "requests.sold": orderData.sold
+              "requests.amount": orderData.amount
             }
           },
           {
