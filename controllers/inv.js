@@ -140,6 +140,7 @@ const updateItem = async (req, res, next) => {
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
   // #swagger.responses[403] = {description: "Forbidden: You must be logged in with an Admin/Manager account."}
+  // #swagger.responses[404] = {description: "Not Found: No record found with ID provided."}
   // #swagger.responses[422] = {description: "Unprocessable Entity: Data is not valid."}
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while updating the Inventory record."}
   try {
@@ -168,10 +169,9 @@ const updateItem = async (req, res, next) => {
       );
     res.setHeader("Content-Type", "application/json");
     if (!result) {
-      res
+      return res
         .status(404)
-        .json({ message: `Nothing to update by ID ${req.params.id}.` }); // Use 404 if nothing found/updated in collection
-      return;
+        .json({ message: `Nothing to update by ID ${ID}.` }); // Use 404 if nothing found/updated in collection
     }
     res.status(200).json(result);
   } catch (err) {
@@ -200,6 +200,7 @@ const deleteItem = async (req, res, next) => {
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in with an Admin/Manager account."}
   // #swagger.responses[403] = {description: "Forbidden: You must be logged in with an Admin/Manager account with the appropriate privileges."}
+  // #swagger.responses[404] = {description: "Not Found: No record found with ID provided."}
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while deleting the Inventory record."}
   try {
     const ID = createObjectId(req.params.id);
@@ -211,9 +212,7 @@ const deleteItem = async (req, res, next) => {
     result.toArray().then((resArr) => {
       res.setHeader("Content-Type", "application/json");
       if (resArr.length === 0) {
-        res
-          .status(404)
-          .json({ message: `Nothing to delete by ID ${req.params.id}.` }); // Falsy (default) // Use 404 if nothing found in collection for deleteItem()
+        res.status(404).json({ message: `Nothing to delete by ID ${ID}.` }); // Falsy (default) // Use 404 if nothing found in collection for deleteItem()
         return;
       }
       res.status(200).json({ message: "Deleted record successfully." });

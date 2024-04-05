@@ -230,38 +230,29 @@ const updateOrder = async (req, res, next) => {
     const orderData = await orderPUTSchema.validateAsync(orderBody, {
       allowUnknown: true
     });
-    let order = await mongodb
+    const result = await mongodb
       .getDb()
       .db()
       .collection("orders")
-      .findOne({ _id: ID });
-    res.setHeader("Content-Type", "application/json");
-    if (order) {
-      // Customer order found, good to proceed
-      order = await mongodb
-        .getDb()
-        .db()
-        .collection("orders")
-        .updateOne(
-          // Now for the hard stuff
-          { _id: ID },
-          {
-            $set: {
-              "requests.itemName": orderData.itemName,
-              "requests.amount": orderData.amount
-            }
-          },
-          {
-            returnDocument: "after"
+      .findOneAndUpdate(
+        // Now for the hard stuff
+        { _id: ID },
+        {
+          $set: {
+            "requests.itemName": orderData.itemName,
+            "requests.amount": orderData.amount
           }
-        );
-      if (order.length > 0) {
-        return res.status(200).json(order);
-      }
+        },
+        {
+          returnDocument: "after"
+        }
+      );
+    if (!result) {
+      return res
+        .status(404)
+        .json({ message: `Nothing to update by ID ${ID}.` }); // Use 404 if nothing found/updated in collection
     }
-    res
-      .status(404)
-      .json({ message: `Nothing to update by ID ${req.params.id}.` }); // Use 404 if nothing found/updated in collection
+    res.status(200).json(result);
   } catch (err) {
     if (err.isJoi === true) err.status = 422;
     next(err);
@@ -304,7 +295,7 @@ const deleteOrder = async (req, res, next) => {
     if (result.deletedCount === 0) {
       return res
         .status(404)
-        .json({ message: `Nothing to delete by ID ${req.params.id}.` }); // Use 404 if nothing found in collection for deleteOrder()
+        .json({ message: `Nothing to delete by ID ${ID}.` }); // Use 404 if nothing found in collection for deleteOrder()
     }
     res.status(200).json({ message: "Successfully deleted order record." });
   } catch (err) {

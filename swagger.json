@@ -279,9 +279,6 @@
           "403": {
             "description": "Forbidden: You do not have access to that account information."
           },
-          "404": {
-            "description": "Not Found: No record found with ID provided."
-          },
           "409": {
             "description": "Conflict: Unique Constraint Error: Email is already in use for this collection."
           },
@@ -836,7 +833,7 @@
             "description": "Forbidden: You must be logged in with an Admin/Manager account."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found: No record found with ID provided."
           },
           "422": {
             "description": "Unprocessable Entity: Data is not valid."
@@ -889,7 +886,7 @@
             "description": "Forbidden: You must be logged in with an Admin/Manager account with the appropriate privileges."
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found: No record found with ID provided."
           },
           "500": {
             "description": "Internal Server Error: Something happened on the server side while deleting the Inventory record."

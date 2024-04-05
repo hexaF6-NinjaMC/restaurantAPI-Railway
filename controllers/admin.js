@@ -78,7 +78,7 @@ const getAdminById = async (req, res, next) => {
     res.setHeader("Content-Type", "application/json");
     if (!result) {
       res.status(404).json({
-        message: `Nothing could be found with ID ${req.params.id}.`
+        message: `Nothing could be found with ID ${ID}.`
       }); // Nothing was found.
       return;
     }
@@ -224,13 +224,11 @@ const updateAdmin = async (req, res, next) => {
         );
       if (!operator) {
         // ID not found, resource not found (404)
-        res
+        return res
           .status(404)
-          .json({ message: `Nothing to update by ID ${req.params.id}.` }); // Use 404 if nothing found/updated in collection
-        return;
+          .json({ message: `Nothing to update by ID ${ID}.` }); // Use 404 if nothing found/updated in collection
       }
-      res.status(200).json(operator);
-      return;
+      return res.status(200).json(operator);
     }
     res.status(409).json({
       message:
@@ -273,9 +271,7 @@ const deleteAdmin = async (req, res, next) => {
       .deleteOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (result.deletedCount === 0) {
-      res
-        .status(404)
-        .json({ message: `Nothing to delete by ID ${req.params.id}.` }); // Falsy (default) // Should we use 200 or 404 if nothing found in collection for deleteAdmin()?
+      res.status(404).json({ message: `Nothing to delete by ID ${ID}.` }); // Falsy (default) // Should we use 200 or 404 if nothing found in collection for deleteAdmin()?
       return;
     }
     res.status(200).json({ message: "Successfully deleted admin record." });

@@ -75,9 +75,7 @@ const getCustomerById = async (req, res, next) => {
       .findOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (!result) {
-      res
-        .status(404)
-        .json({ message: `Customer not found by ID ${req.params.id}.` });
+      res.status(404).json({ message: `Customer not found by ID ${ID}.` });
       return;
     }
     res.status(200).json(result);
@@ -113,7 +111,6 @@ const createCustomer = async (req, res, next) => {
   // #swagger.responses[200] = {description: "OK: Customer record was successfully created."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
   // #swagger.responses[403] = {description: "Forbidden: You do not have access to that account information."}
-  // #swagger.responses[404] = {description: "Not Found: No record found with ID provided."}
   // #swagger.responses[409] = {description: "Conflict: Unique Constraint Error: Email is already in use for this collection."}
   // #swagger.responses[422] = {description: "Unprocessable Entity: Data is not valid."}
   // #swagger.responses[500] = {description: "Internal Server Error: Something happened on the server side while creating the Customer profile."}
@@ -224,13 +221,11 @@ const updateCustomer = async (req, res, next) => {
           }
         );
       if (!customer) {
-        res
+        return res
           .status(404)
-          .json({ message: `Nothing to update by ID ${req.params.id}.` }); // Use 404 if nothing found/updated in collection
-        return;
+          .json({ message: `Nothing to update by ID ${ID}.` }); // Use 404 if nothing found/updated in collection
       }
-      res.status(200).json(customer);
-      return;
+      return res.status(200).json(customer);
     }
     res.status(409).json({
       message:
@@ -273,9 +268,7 @@ const deleteCustomer = async (req, res, next) => {
       .deleteOne({ _id: ID });
     res.setHeader("Content-Type", "application/json");
     if (result.deletedCount === 0) {
-      res
-        .status(404)
-        .json({ message: `Nothing to delete by ID ${req.params.id}.` }); // Use 200 or 404 if nothing found in collection for deleteCustomer()
+      res.status(404).json({ message: `Nothing to delete by ID ${ID}.` }); // Use 404 if nothing found in collection for deleteCustomer()
       return;
     }
     res.status(200).json({ message: "Successfully deleted customer record." });
