@@ -18,7 +18,10 @@ const getAll = async (req, res, next) => {
   }] */
   // #swagger.summary = "Get All Admin (lvl 1) or Manager (lvl 2) records."
   // #swagger.description = "Get All Admin (lvl 1) or Manager (lvl 2) records."
-  // #swagger.parameters["op_lvl"] = {description: "The Operator level to filter by."}
+  /* #swagger.parameters["op_lvl"] = {
+    description: "The Operator level to filter by.",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Admin records were successfully retrieved."}
   // #swagger.responses[204] = {description: "No Content: Nothing existed in the database for that query."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in with an Admin account."}
@@ -55,6 +58,10 @@ const getAdminById = async (req, res, next) => {
   }] */
   // #swagger.summary = "Get Admin (lvl 1) or Manager (lvl 2) record by ID."
   // #swagger.description = "Get Admin (lvl 1) or Manager (lvl 2) record by ID."
+  /* #swagger.parameters["id"] = {
+    description: "Operator\'s ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Admin record was successfully retrieved."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in with an Admin account."}
@@ -169,6 +176,10 @@ const updateAdmin = async (req, res, next) => {
   }] */
   // #swagger.summary = "Update Admin/Manager record, ref'd by _id, with optional fields."
   // #swagger.description = "Update Admin/Manager record, ref'd by _id, with optional fields."
+  /* #swagger.parameters["id"] = {
+    description: "Operator\'s ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Admin record was successfully updated."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in with an Admin account."}
@@ -243,6 +254,10 @@ const deleteAdmin = async (req, res, next) => {
   }] */
   // #swagger.summary = "Delete Admin/Manager record, ref'd by _id."
   // #swagger.description = "Delete Admin/Manager record, ref'd by _id."
+  /* #swagger.parameters["id"] = {
+    description: "Operator\'s ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Admin record was successfully deleted."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}

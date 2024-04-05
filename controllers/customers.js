@@ -57,6 +57,10 @@ const getCustomerById = async (req, res, next) => {
   }] */
   // #swagger.summary = "Get Customer record by ID."
   // #swagger.description = "Get Customer record by ID."
+  /* #swagger.parameters["id"] = {
+    description: "Customer ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Customer record was successfully retrieved."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
@@ -250,6 +254,10 @@ const deleteCustomer = async (req, res, next) => {
   }] */
   // #swagger.summary = "Delete Customer record, ref'd by _id."
   // #swagger.description = "Delete Customer record, ref'd by _id."
+  /* #swagger.parameters["id"] = {
+    description: "Customer ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Customer record was successfully deleted."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}

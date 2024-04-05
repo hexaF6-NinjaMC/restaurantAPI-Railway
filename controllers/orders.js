@@ -49,7 +49,10 @@ const getOrderById = async (req, res, next) => {
     ]
   }] */
   // #swagger.summary = "Get Order record by ID."
-  // #swagger.parameters["id"] = {description: "The Order ID; a hexadecimal string of 24 characters."}
+  /* #swagger.parameters["id"] = {
+    description: "Order ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Order record was successfully retrieved."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
@@ -209,7 +212,10 @@ const updateOrder = async (req, res, next) => {
   } */
   // #swagger.summary = "Update Order record, with optional fields."
   // #swagger.description = "Update Order record, with optional fields."
-  // #swagger.parameters["id"] = {description: "The Order ID; a hexadecimal string of 24 characters."}
+  /* #swagger.parameters["id"] = {
+    description: "Order ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Order record was successfully updated."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character MongoDB ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
@@ -282,7 +288,10 @@ const deleteOrder = async (req, res, next) => {
   }] */
   // #swagger.summary = "Delete Order record by ID."
   // #swagger.description = "Delete Order record by ID."
-  // #swagger.parameters["id"] = {description: "The Order ID; a hexadecimal string of 24 characters."}
+  /* #swagger.parameters["id"] = {
+    description: "Order ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Order record was successfully retrieved."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character MongoDB ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}

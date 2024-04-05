@@ -21,6 +21,7 @@
           {
             "name": "op_lvl",
             "description": "The Operator level to filter by.",
+            "required": true,
             "in": "query",
             "schema": {
               "type": "string"
@@ -105,7 +106,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Operator's ID"
           }
         ],
         "responses": {
@@ -145,7 +147,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Operator's ID"
           }
         ],
         "responses": {
@@ -200,7 +203,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Operator's ID"
           }
         ],
         "responses": {
@@ -317,7 +321,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Customer ID"
           }
         ],
         "responses": {
@@ -415,7 +420,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Customer ID"
           }
         ],
         "responses": {
@@ -586,7 +592,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The Order ID; a hexadecimal string of 24 characters."
+            "description": "Order ID"
           }
         ],
         "responses": {
@@ -628,7 +634,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The Order ID; a hexadecimal string of 24 characters."
+            "description": "Order ID"
           }
         ],
         "responses": {
@@ -682,7 +688,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The Order ID; a hexadecimal string of 24 characters."
+            "description": "Order ID"
           }
         ],
         "responses": {
@@ -779,7 +785,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Inventory item ID"
           }
         ],
         "responses": {
@@ -811,7 +818,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Inventory item ID"
           }
         ],
         "responses": {
@@ -863,7 +871,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Inventory item ID"
           }
         ],
         "responses": {

@@ -37,6 +37,10 @@ const getItemById = async (req, res, next) => {
   // #swagger.tags = ["Inventory"]
   // #swagger.summary = "Get inventory items by Object ID."
   // #swagger.description = "Get inventory items by Object ID."
+  /* #swagger.parameters["id"] = {
+    description: "Inventory item ID",
+    required: true
+  } */
   // #swagger.responses[201] = {description: "Created: Inventory item was successfully received."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[404] = {description: "Not Found: No inventory item found with id provided."}
@@ -128,6 +132,10 @@ const updateItem = async (req, res, next) => {
   } */
   // #swagger.summary = "Update an Inventory item record."
   // #swagger.description = "Update an Inventory item record."
+  /* #swagger.parameters["id"] = {
+    description: "Inventory item ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Inventory item record was successfully updated."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in."}
@@ -184,6 +192,10 @@ const deleteItem = async (req, res, next) => {
   }] */
   // #swagger.summary = "Delete an Inventory record."
   // #swagger.description = "Delete an Inventory record."
+  /* #swagger.parameters["id"] = {
+    description: "Inventory item ID",
+    required: true
+  } */
   // #swagger.responses[200] = {description: "OK: Inventory record was successfully deleted."}
   // #swagger.responses[400] = {description: "Bad Request: ID is not a valid 24-character HexString ObjectID."}
   // #swagger.responses[401] = {description: "Unauthorized: You must be logged in with an Admin/Manager account."}
