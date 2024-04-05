@@ -181,8 +181,8 @@ const orderPOSTSchema = Joi.object().keys({
 });
 
 const orderPUTSchema = Joi.object().keys({
-  itemName: Joi.string().empty("").trim().lowercase().required().min(1),
-  amount: Joi.number().integer().required().min(1)
+  itemName: Joi.string().empty("").trim().lowercase().min(1),
+  amount: Joi.number().empty("").integer().min(1)
 });
 
 module.exports = {
