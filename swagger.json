@@ -1,0 +1,1149 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Restaurant API",
+    "description": "Restaurants, orders, inventory, customers, and operator management"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8085",
+      "description": "Local server for testing"
+    }
+  ],
+  "paths": {
+    "/admin/": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get All Admin (lvl 1) or Manager (lvl 2) records.",
+        "description": "Get All Admin (lvl 1) or Manager (lvl 2) records.",
+        "parameters": [
+          {
+            "name": "op_lvl",
+            "description": "The Operator level to filter by.",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Admin records were successfully retrieved."
+          },
+          "204": {
+            "description": "No Content: Nothing existed in the database for that query."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in with an Admin account."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin account with the appropriate privileges."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while retrieving the Admin profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["read"]
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Create a new Admin (lvl 1) or Manager (lvl 2) record.",
+        "description": "Create a new Admin (lvl 1) or Manager (lvl 2) record.",
+        "responses": {
+          "201": {
+            "description": "Created: Admin record was successfully created."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in with an Admin account."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin account with the appropriate privileges."
+          },
+          "409": {
+            "description": "Conflict: Email is already in use for this collection."
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Admin profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["write"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaAdminRequired"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/{id}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Admin (lvl 1) or Manager (lvl 2) record by ID.",
+        "description": "Get Admin (lvl 1) or Manager (lvl 2) record by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Admin record was successfully retrieved."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in with an Admin account."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin account with the appropriate privileges."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while retrieving the Admin profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["read"]
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update Admin/Manager record, ref'd by _id, with optional fields.",
+        "description": "Update Admin/Manager record, ref'd by _id, with optional fields.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Admin record was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in with an Admin account."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin account with the appropriate privileges."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "409": {
+            "description": "Conflict: Unique Constraint Error: Email is already in use for this collection."
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Admin profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["write"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaAdminOptional"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete Admin/Manager record, ref'd by _id.",
+        "description": "Delete Admin/Manager record, ref'd by _id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Admin record was successfully deleted."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin account with the appropriate privileges."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Admin profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["delete"]
+          }
+        ]
+      }
+    },
+    "/user/": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "Get All Customer records.",
+        "description": "Get All Customer records.",
+        "responses": {
+          "200": {
+            "description": "OK: Customer record was successfully created."
+          },
+          "204": {
+            "description": "No Content: Nothing existed in the database for that query."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin/Manager account with the appropriate privileges."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Customer profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["read"]
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Customer"],
+        "summary": "Create a new Customer record.",
+        "description": "Create a new Customer record.",
+        "responses": {
+          "200": {
+            "description": "OK: Customer record was successfully created."
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You do not have access to that account information."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "409": {
+            "description": "Conflict: Unique Constraint Error: Email is already in use for this collection."
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Customer profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["write"],
+            "Customer": ["write"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaCustomerRequired"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "Get Customer record by ID.",
+        "description": "Get Customer record by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Customer record was successfully retrieved."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Customer profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["read"],
+            "Customer": ["read"]
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Customer"],
+        "summary": "Update Customer record, ref'd by _id, with optional fields.",
+        "description": "Update Customer record, ref'd by _id, with optional fields.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Customer record was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Customer profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["write"],
+            "Customer": ["write"]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaCustomerOptional"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Customer"],
+        "summary": "Delete Customer record, ref'd by _id.",
+        "description": "Delete Customer record, ref'd by _id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Customer record was successfully deleted."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while deleting the Customer profile."
+          }
+        },
+        "security": [
+          {
+            "Admin": ["delete"],
+            "Customer": ["delete"]
+          }
+        ]
+      }
+    },
+    "/order/": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get All Order records.",
+        "description": "Get All Order records.",
+        "responses": {
+          "200": {
+            "description": "OK: Order records were successfully pulled."
+          },
+          "204": {
+            "description": "No Content: No records found in collection."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin or Manager account with the appropriate privileges."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while pulling the Order record."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Create Order record.",
+        "description": "Create Order record.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": "The Order's User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created: Order record was successfully created."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in as an Admin or Manager with the appropriate privileges, or with the appropriate Customer account."
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Order record."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaOrderRequired"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/customer": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get Order records by Customer ID.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": "The Orders' User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Order record was successfully retrieved."
+          },
+          "204": {
+            "description": "No Content: No records found in collection."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character MongoDB ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in as an Admin or Manager with the appropriate privileges, or with the appropriate Customer account."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while obtaining the Order record."
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get Order record by ID.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Order ID; a hexadecimal string of 24 characters."
+          },
+          {
+            "name": "user_id",
+            "description": "The Order User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Order record was successfully retrieved."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in as an Admin or Manager with the appropriate privileges, or with the appropriate Customer account."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while obtaining the Order record."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Orders"],
+        "summary": "Update Order record, with optional fields.",
+        "description": "Update Order record, with optional fields.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Order ID; a hexadecimal string of 24 characters."
+          },
+          {
+            "name": "user_id",
+            "description": "The Order User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Order record was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character MongoDB ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in as an Admin or Manager with the appropriate privileges, or with the appropriate Customer account."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while obtaining the Order record."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaOrderOptional"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Orders"],
+        "summary": "Delete Order record by ID.",
+        "description": "Delete Order record by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Order ID; a hexadecimal string of 24 characters."
+          },
+          {
+            "name": "user_id",
+            "description": "The Order User ID; a hexadecimal string of 24 characters. If not Admin (op_lvl 1) or Manager (op_lvl 2), must match the session user ID.",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Order record was successfully retrieved."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character MongoDB ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in as an Admin or Manager with the appropriate privileges, or with the appropriate Customer account."
+          },
+          "404": {
+            "description": "Not Found: No record found with ID provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while obtaining the Order record."
+          }
+        }
+      }
+    },
+    "/inventory/": {
+      "get": {
+        "tags": ["Inventory"],
+        "summary": "Get All Inventory records.",
+        "description": "Get All Inventory records.",
+        "responses": {
+          "200": {
+            "description": "OK: Inventory records were successfully pulled."
+          },
+          "204": {
+            "description": "No Content: Nothing existed in the database for that query."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while pulling the Inventory record."
+          }
+        }
+      },
+      "post": {
+        "tags": ["Inventory"],
+        "summary": "Create a new Inventory record.",
+        "description": "Create a new Inventory record.",
+        "responses": {
+          "201": {
+            "description": "Created: Inventory record was successfully created."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin/Manager account."
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while creating the Inventory record."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaInventoryRequired"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/inventory/{id}": {
+      "get": {
+        "tags": ["Inventory"],
+        "summary": "Get inventory items by Object ID.",
+        "description": "Get inventory items by Object ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created: Inventory item was successfully received."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "404": {
+            "description": "Not Found: No inventory item found with id provided."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while requesting the Inventory item."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Inventory"],
+        "summary": "Update an Inventory item record.",
+        "description": "Update an Inventory item record.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Inventory item record was successfully updated."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin/Manager account."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity: Data is not valid."
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while updating the Inventory record."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/schemaInventoryOptional"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Inventory"],
+        "summary": "Delete an Inventory record.",
+        "description": "Delete an Inventory record.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK: Inventory record was successfully deleted."
+          },
+          "400": {
+            "description": "Bad Request: ID is not a valid 24-character HexString ObjectID."
+          },
+          "401": {
+            "description": "Unauthorized: You must be logged in with an Admin/Manager account."
+          },
+          "403": {
+            "description": "Forbidden: You must be logged in with an Admin/Manager account with the appropriate privileges."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error: Something happened on the server side while deleting the Inventory record."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "Admin": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/auth/admin/google/callback",
+            "scopes": {
+              "read": "Grants GET requests",
+              "write": "Grants POST and PUT requests",
+              "delete": "Grants DELETE requests"
+            }
+          }
+        }
+      },
+      "Customer": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "/auth/customer/google/callback",
+            "scopes": {
+              "read": "Grants GET requests",
+              "write": "Grants POST and PUT requests",
+              "delete": "Grants DELETE requests"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "schemaAdminRequired": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "example": ""
+          },
+          "fname": {
+            "type": "string",
+            "example": ""
+          },
+          "lname": {
+            "type": "string",
+            "example": ""
+          },
+          "email": {
+            "type": "string",
+            "example": ""
+          },
+          "op_lvl": {
+            "type": "string",
+            "example": ""
+          },
+          "profilePicURI": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "required": ["displayName", "fname", "email", "op_lvl"]
+      },
+      "schemaAdminOptional": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "example": ""
+          },
+          "fname": {
+            "type": "string",
+            "example": ""
+          },
+          "lname": {
+            "type": "string",
+            "example": ""
+          },
+          "email": {
+            "type": "string",
+            "example": ""
+          },
+          "op_lvl": {
+            "type": "string",
+            "example": ""
+          },
+          "profilePicURI": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "schemaCustomerRequired": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "example": ""
+          },
+          "fname": {
+            "type": "string",
+            "example": ""
+          },
+          "lname": {
+            "type": "string",
+            "example": ""
+          },
+          "email": {
+            "type": "string",
+            "example": ""
+          },
+          "profilePicURI": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "required": ["displayName", "fname", "email"]
+      },
+      "schemaCustomerOptional": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "example": ""
+          },
+          "fname": {
+            "type": "string",
+            "example": ""
+          },
+          "lname": {
+            "type": "string",
+            "example": ""
+          },
+          "email": {
+            "type": "string",
+            "example": ""
+          },
+          "profilePicURI": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "schemaOrderRequired": {
+        "type": "object",
+        "properties": {
+          "itemName": {
+            "type": "string",
+            "example": ""
+          },
+          "amount": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "required": ["itemName", "amount"]
+      },
+      "schemaOrderOptional": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": ""
+          },
+          "itemName": {
+            "type": "string",
+            "example": ""
+          },
+          "amount": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "schemaInventoryRequired": {
+        "type": "object",
+        "properties": {
+          "productName": {
+            "type": "string",
+            "example": ""
+          },
+          "price": {
+            "type": "string",
+            "example": ""
+          },
+          "stock": {
+            "type": "string",
+            "example": ""
+          },
+          "description": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "required": ["productName", "price", "stock", "description"]
+      },
+      "schemaInventoryOptional": {
+        "type": "object",
+        "properties": {
+          "productName": {
+            "type": "string",
+            "example": ""
+          },
+          "price": {
+            "type": "string",
+            "example": ""
+          },
+          "stock": {
+            "type": "string",
+            "example": ""
+          },
+          "description": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      }
+    }
+  }
+}
