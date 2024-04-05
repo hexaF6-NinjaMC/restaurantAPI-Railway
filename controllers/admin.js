@@ -181,8 +181,8 @@ const updateAdmin = async (req, res, next) => {
     const ID = createObjectId(req.params.id);
     const operatorBody = {
       displayName: req.body.displayName,
-      fname: req.body.given_name,
-      lname: req.body.family_name,
+      fname: req.body.fname,
+      lname: req.body.lname,
       email: req.body.email,
       profilePicURI: req.body.profilePicURI,
       op_lvl: req.body.op_lvl,
