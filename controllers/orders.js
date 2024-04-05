@@ -247,7 +247,7 @@ const updateOrder = async (req, res, next) => {
           { _id: ID },
           {
             $set: {
-              "requests.itemName": orderData.itemName.toLowerCase(),
+              "requests.itemName": orderData.itemName,
               "requests.amount": orderData.amount
             }
           },
