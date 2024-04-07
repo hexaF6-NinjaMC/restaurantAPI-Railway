@@ -1,3 +1,3 @@
 # A Restaurant Inventory/Order API
 
-url: [Render - Restaurant API](https://restaurantapi-m771.onrender.com/)
+url: [Railway - Restaurant API](https://restaurantapi.fsixninja.dev/)
